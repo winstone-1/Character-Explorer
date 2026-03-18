@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import CharacterCard from '../components/CharacterCard'
+import CharacterCard from '../Components/CharacterCard'  // check your exact path/casing
 
 export default function Characters() {
   const [characters, setCharacters] = useState([])
@@ -14,10 +14,10 @@ export default function Characters() {
       })
   }, [])
 
-  if (loading) return <p>Loading...</p>
+  if (loading) return <p className="p-4">Loading...</p>
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+    <div className="grid grid-cols-3 gap-4 p-4">
       {characters.map(char => (
         <CharacterCard key={char.id} character={char} />
       ))}
