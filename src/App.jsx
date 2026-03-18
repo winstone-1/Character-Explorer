@@ -4,7 +4,7 @@ import CharacterDetail from './Pages/CharacterDetail'
 import Characters from './Pages/Characters'
 import Dashboard from './Pages/Dashboard'
 import Home from './Pages/Home'
-
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 function App() {
   return (
