@@ -1,11 +1,10 @@
-import React from 'react'
+import { Link } from 'react-router-dom'
 
-function CharacterCard() {
+export default function CharacterCard({ character }) {
   return (
-    <div>
-      <h1 className='text-blue-900'>Hello World</h1>
-    </div>
+    <Link to={`/dashboard/characters/${character.id}`}>
+      <img src={character.image} alt={character.name} width={100} />
+      <p>{character.name}</p>
+    </Link>
   )
 }
-
-export default CharacterCard
