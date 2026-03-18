@@ -8,13 +8,14 @@ import Home from './Pages/Home'
 
 function App() {
   return (
-    <>
-    <About/>
-    <CharacterDetail/>
-    <Characters/>
-    <Dashboard/>
-    <Home/>
-    </>
+    <Routes>
+      <Route path="/" element={<Navigate to="/dashboard" />} />
+      <Route path="/dashboard" element={<Dashboard />}>
+        <Route index element={<Home />} />
+        <Route path="characters" element={<Characters />} />
+        <Route path="about" element={<About />} />
+      </Route>
+    </Routes>
   )
 }
 
