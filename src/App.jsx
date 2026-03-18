@@ -5,6 +5,8 @@ import Characters from './Pages/Characters'
 import Dashboard from './Pages/Dashboard'
 import Home from './Pages/Home'
 import { Routes, Route, Navigate } from 'react-router-dom'
+import CharacterInfo from './Components/CharacterInfo'
+import CharacterEpisodes from './Components/CharacterEpisodes'
 
 function App() {
   return (
@@ -13,7 +15,11 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />}>
         <Route index element={<Home />} />
         <Route path="characters" element={<Characters />} />
-        <Route path="characters/:id" element={<CharacterDetail />} />
+        <Route path="characters/:id" element={<CharacterDetail />}>
+          <Route index element={<Navigate to="info" />} />
+          <Route path="info" element={<CharacterInfo />} />
+          <Route path="episodes" element={<CharacterEpisodes />} />
+        </Route>
         <Route path="about" element={<About />} />
       </Route>
     </Routes>
