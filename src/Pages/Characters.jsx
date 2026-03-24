@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import CharacterCard from '../Components/CharacterCard'
+import { useCharacters } from '../Context/CharacterContext'
 
 export default function Characters() {
   const [characters, setCharacters] = useState([])
@@ -7,6 +8,7 @@ export default function Characters() {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
+  const { isDeleted } = useCharacters()
 
   useEffect(() => {
     setLoading(true)
@@ -24,15 +26,15 @@ export default function Characters() {
       })
   }, [page, search])
 
-  // Reset to page 1 when search changes
   const handleSearch = (e) => {
     setSearch(e.target.value)
     setPage(1)
   }
 
+  const visible = characters.filter(c => !isDeleted(c.id))
+
   return (
     <div className="p-4">
-      {/* Search bar */}
       <input
         type="text"
         placeholder="Search characters..."
@@ -43,12 +45,12 @@ export default function Characters() {
 
       {loading ? (
         <p className="p-4">Loading...</p>
-      ) : characters.length === 0 ? (
+      ) : visible.length === 0 ? (
         <p className="p-4 text-gray-500">No characters found.</p>
       ) : (
         <>
           <div className="grid grid-cols-3 gap-4">
-            {characters.map(char => (
+            {visible.map(char => (
               <CharacterCard key={char.id} character={char} />
             ))}
           </div>
