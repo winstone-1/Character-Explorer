@@ -2,6 +2,30 @@ import { useParams, useNavigate, Outlet, NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useCharacters } from '../Context/CharacterContext'
 
+function SkeletonDetail() {
+  return (
+    <div className="p-4 animate-pulse">
+      <div className="h-4 bg-gray-200 rounded w-32 mb-6" />
+      <div className="flex gap-6 mb-6">
+        <div className="w-48 h-48 bg-gray-200 rounded-lg" />
+        <div className="flex flex-col gap-3 justify-center">
+          <div className="h-6 bg-gray-200 rounded w-48" />
+          <div className="h-4 bg-gray-200 rounded w-32" />
+        </div>
+      </div>
+      <div className="flex gap-4 border-b mb-4">
+        <div className="h-4 bg-gray-200 rounded w-12 mb-2" />
+        <div className="h-4 bg-gray-200 rounded w-16 mb-2" />
+      </div>
+      <div className="space-y-3">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div key={i} className="h-4 bg-gray-200 rounded w-full" />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function CharacterDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -12,6 +36,7 @@ export default function CharacterDetail() {
   const { deleteCharacter, updateCharacter, isDeleted, getCharacter } = useCharacters()
 
   useEffect(() => {
+    setLoading(true)
     fetch(`https://rickandmortyapi.com/api/character/${id}`)
       .then(res => res.json())
       .then(data => {
@@ -27,7 +52,7 @@ export default function CharacterDetail() {
     }
   }, [loading, id, isDeleted])
 
-  if (loading) return <p className="p-4">Loading...</p>
+  if (loading) return <SkeletonDetail />
 
   const display = getCharacter(character)
 
@@ -47,7 +72,6 @@ export default function CharacterDetail() {
   return (
     <div className="p-4">
       <div className="flex items-center justify-between mb-4">
-        {/* Always navigates back to characters list reliably */}
         <button
           onClick={() => navigate('/dashboard/characters')}
           className="text-sm text-blue-600 hover:underline"

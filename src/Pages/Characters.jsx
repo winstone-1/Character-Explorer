@@ -2,6 +2,17 @@ import { useEffect, useState } from 'react'
 import CharacterCard from '../Components/CharacterCard'
 import { useCharacters } from '../Context/CharacterContext'
 
+function SkeletonCard() {
+  return (
+    <div className="bg-white rounded-lg shadow animate-pulse">
+      <div className="w-full aspect-square bg-gray-200 rounded-t-lg" />
+      <div className="p-2 flex justify-center">
+        <div className="h-4 bg-gray-200 rounded w-3/4" />
+      </div>
+    </div>
+  )
+}
+
 export default function Characters() {
   const [characters, setCharacters] = useState([])
   const [loading, setLoading] = useState(true)
@@ -44,7 +55,11 @@ export default function Characters() {
       />
 
       {loading ? (
-        <p className="p-4">Loading...</p>
+        <div className="grid grid-cols-3 gap-4">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
       ) : visible.length === 0 ? (
         <p className="p-4 text-gray-500">No characters found.</p>
       ) : (
@@ -61,16 +76,12 @@ export default function Characters() {
               onClick={() => setPage(1)}
               disabled={page === 1}
               className="px-3 py-1 rounded border text-sm disabled:opacity-40 hover:bg-gray-100"
-            >
-              «
-            </button>
+            >«</button>
             <button
               onClick={() => setPage(p => p - 1)}
               disabled={page === 1}
               className="px-3 py-1 rounded border text-sm disabled:opacity-40 hover:bg-gray-100"
-            >
-              ‹
-            </button>
+            >‹</button>
 
             {Array.from({ length: totalPages }, (_, i) => i + 1)
               .filter(p => p === 1 || p === totalPages || Math.abs(p - page) <= 2)
@@ -87,13 +98,9 @@ export default function Characters() {
                     key={p}
                     onClick={() => setPage(p)}
                     className={`px-3 py-1 rounded border text-sm ${
-                      p === page
-                        ? 'bg-blue-600 text-white border-blue-600'
-                        : 'hover:bg-gray-100'
+                      p === page ? 'bg-blue-600 text-white border-blue-600' : 'hover:bg-gray-100'
                     }`}
-                  >
-                    {p}
-                  </button>
+                  >{p}</button>
                 )
               )}
 
@@ -101,16 +108,12 @@ export default function Characters() {
               onClick={() => setPage(p => p + 1)}
               disabled={page === totalPages}
               className="px-3 py-1 rounded border text-sm disabled:opacity-40 hover:bg-gray-100"
-            >
-              ›
-            </button>
+            >›</button>
             <button
               onClick={() => setPage(totalPages)}
               disabled={page === totalPages}
               className="px-3 py-1 rounded border text-sm disabled:opacity-40 hover:bg-gray-100"
-            >
-              »
-            </button>
+            >»</button>
           </div>
 
           <p className="text-center text-sm text-gray-400 mt-2">
