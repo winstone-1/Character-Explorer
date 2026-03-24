@@ -17,5 +17,4 @@ A React application for browsing Rick and Morty characters, built as a routing a
 - React (Vite)
 - React Router DOM v6
 - Tailwind CSS v4
-- Rick and Morty API — https://rickandmortyapi.com
 
