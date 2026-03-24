@@ -16,7 +16,6 @@ export default function CharacterDetail() {
       .then(res => res.json())
       .then(data => {
         setCharacter(data)
-        // Populate form once data loads
         setForm({ name: data.name, status: data.status, species: data.species })
         setLoading(false)
       })
@@ -48,8 +47,12 @@ export default function CharacterDetail() {
   return (
     <div className="p-4">
       <div className="flex items-center justify-between mb-4">
-        <button onClick={() => navigate(-1)} className="text-sm text-blue-600 hover:underline">
-          ← Back
+        {/* Always navigates back to characters list reliably */}
+        <button
+          onClick={() => navigate('/dashboard/characters')}
+          className="text-sm text-blue-600 hover:underline"
+        >
+          ← Back to Characters
         </button>
         <div className="flex gap-2">
           <button
@@ -75,7 +78,6 @@ export default function CharacterDetail() {
         </div>
       </div>
 
-      {/* Tabs */}
       <div className="flex gap-4 border-b mb-4">
         <NavLink
           to="info"
@@ -97,7 +99,6 @@ export default function CharacterDetail() {
 
       <Outlet context={display} />
 
-      {/* Edit Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl p-6 w-full max-w-sm shadow-xl">
@@ -132,17 +133,10 @@ export default function CharacterDetail() {
                 />
               </div>
               <div className="flex gap-2 mt-2">
-                <button
-                  type="submit"
-                  className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
-                >
+                <button type="submit" className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
                   Save
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                  className="flex-1 border py-2 rounded-lg hover:bg-gray-50"
-                >
+                <button type="button" onClick={() => setShowModal(false)} className="flex-1 border py-2 rounded-lg hover:bg-gray-50">
                   Cancel
                 </button>
               </div>
